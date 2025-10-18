@@ -16,6 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
 	title: "Pulse Trades",
 	description: "Trading community gamification system with daily leaderboards and prestige badges",
+    generator: 'v0.app'
 };
 
 export default function RootLayout({

@@ -33,9 +33,9 @@ A trading community gamification system built for the Whop ecosystem. Features d
 
 Copy `env.example` to `.env.local` and fill in your credentials:
 
-```bash
+\`\`\`bash
 cp env.example .env.local
-```
+\`\`\`
 
 Required variables:
 - **Whop Configuration**: Get these from your Whop Developer Dashboard
@@ -53,13 +53,13 @@ Required variables:
 
 ### 4. Installation
 
-```bash
+\`\`\`bash
 # Install dependencies
 pnpm install
 
 # Start development server
 pnpm dev
-```
+\`\`\`
 
 ### 5. Deployment
 
