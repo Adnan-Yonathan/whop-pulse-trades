@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Dialog, Button, Input, Label, Card } from "frosted-ui";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, Button, Input, Label, Card } from "frosted-ui";
 import { Toast } from "frosted-ui";
 
 interface SubmissionModalProps {
@@ -80,12 +80,12 @@ export function SubmissionModal({ isOpen, onClose, onSuccess, experienceId }: Su
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <Dialog.Content className="max-w-md">
-        <Dialog.Header>
-          <Dialog.Title>Submit Your P&L</Dialog.Title>
-          <Dialog.Description>
+        <DialogHeader>
+          <DialogTitle>Submit Your P&L</DialogTitle>
+          <DialogDescription>
             Submit your percentage gain or loss for today. You can only submit once per day.
-          </Dialog.Description>
-        </Dialog.Header>
+          </DialogDescription>
+        </DialogHeader>
 
         <div className="space-y-4">
           <div>
@@ -133,14 +133,14 @@ export function SubmissionModal({ isOpen, onClose, onSuccess, experienceId }: Su
           )}
         </div>
 
-        <Dialog.Footer className="flex justify-end space-x-2">
+        <DialogFooter className="flex justify-end space-x-2">
           <Button variant="outline" onClick={onClose} disabled={isSubmitting}>
             Cancel
           </Button>
           <Button onClick={handleSubmit} disabled={isSubmitting}>
             {isSubmitting ? 'Submitting...' : 'Submit'}
           </Button>
-        </Dialog.Footer>
+        </DialogFooter>
       </Dialog.Content>
     </Dialog>
   );

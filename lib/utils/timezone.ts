@@ -1,10 +1,10 @@
-import { formatInTimeZone, zonedTimeToUtc } from 'date-fns-tz';
+import { formatInTimeZone, toZonedTime } from 'date-fns-tz';
 import { startOfDay, endOfDay, startOfWeek } from 'date-fns';
 
 const ET_TIMEZONE = 'America/New_York';
 
 export function getETDate(date: Date = new Date()): Date {
-  return zonedTimeToUtc(date, ET_TIMEZONE);
+  return toZonedTime(date, ET_TIMEZONE);
 }
 
 export function formatETDate(date: Date, format: string = 'yyyy-MM-dd'): string {
@@ -41,7 +41,7 @@ export function getNextMidnightET(): Date {
   midnightET.setHours(0, 0, 0, 0);
   
   // Convert to UTC
-  return zonedTimeToUtc(midnightET, ET_TIMEZONE);
+  return toZonedTime(midnightET, ET_TIMEZONE);
 }
 
 export function getTimeUntilMidnightET(): {

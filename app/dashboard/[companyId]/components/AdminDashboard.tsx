@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button, Card, Table, Badge, Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "frosted-ui";
+import { Button, Card, Badge, Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "frosted-ui";
 import { supabase } from "@/lib/supabase";
 
 interface AdminDashboardProps {
@@ -209,54 +209,56 @@ export function AdminDashboard({ companyId }: AdminDashboardProps) {
         </h3>
         
         {submissions.length > 0 ? (
-          <Table>
-            <Table.Header>
-              <Table.Row>
-                <Table.Head>Rank</Table.Head>
-                <Table.Head>User</Table.Head>
-                <Table.Head className="text-right">Gain</Table.Head>
-                <Table.Head className="text-right">Submitted</Table.Head>
-                <Table.Head className="text-center">Proof</Table.Head>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {submissions.map((submission, index) => (
-                <Table.Row key={submission.id}>
-                  <Table.Cell className="font-medium">#{index + 1}</Table.Cell>
-                  <Table.Cell>
-                    <div>
-                      <div className="font-medium">{submission.user.name}</div>
-                      <div className="text-sm text-gray-6">@{submission.user.username}</div>
-                    </div>
-                  </Table.Cell>
-                  <Table.Cell className="text-right">
-                    <span className={`font-bold ${submission.percentage_gain > 0 ? 'text-green-6' : submission.percentage_gain < 0 ? 'text-red-6' : 'text-gray-9'}`}>
-                      {submission.percentage_gain > 0 ? '+' : ''}{submission.percentage_gain.toFixed(2)}%
-                    </span>
-                  </Table.Cell>
-                  <Table.Cell className="text-right text-sm text-gray-6">
-                    {new Date(submission.submitted_at).toLocaleTimeString([], { 
-                      hour: '2-digit', 
-                      minute: '2-digit' 
-                    })}
-                  </Table.Cell>
-                  <Table.Cell className="text-center">
-                    {submission.proof_image_url ? (
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => handleImageClick(submission.proof_image_url!)}
-                      >
-                        View Proof
-                      </Button>
-                    ) : (
-                      <span className="text-gray-5 text-sm">No proof</span>
-                    )}
-                  </Table.Cell>
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Gain</th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Submitted</th>
+                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Proof</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {submissions.map((submission, index) => (
+                  <tr key={submission.id}>
+                    <td className="px-6 py-4 whitespace-nowrap font-medium">#{index + 1}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div>
+                        <div className="font-medium">{submission.user.name}</div>
+                        <div className="text-sm text-gray-600">@{submission.user.username}</div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right">
+                      <span className={`font-bold ${submission.percentage_gain > 0 ? 'text-green-600' : submission.percentage_gain < 0 ? 'text-red-600' : 'text-gray-900'}`}>
+                        {submission.percentage_gain > 0 ? '+' : ''}{submission.percentage_gain.toFixed(2)}%
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-600">
+                      {new Date(submission.submitted_at).toLocaleTimeString([], { 
+                        hour: '2-digit', 
+                        minute: '2-digit' 
+                      })}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-center">
+                      {submission.proof_image_url ? (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleImageClick(submission.proof_image_url!)}
+                        >
+                          View Proof
+                        </Button>
+                      ) : (
+                        <span className="text-gray-500 text-sm">No proof</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         ) : (
           <div className="text-center py-8 text-gray-6">
             No submissions yet today

@@ -42,12 +42,12 @@ export async function GET(request: NextRequest): Promise<Response> {
           .limit(1)
           .single();
 
-        if (winner && winner.user_id) {
+        if (winner && winner.user_id && winner.user) {
           // Award prestige
           const { error: updateError } = await supabaseAdmin
             .from('users')
             .update({
-              prestige_level: winner.user.prestige_level + 1,
+              prestige_level: (winner.user as any).prestige_level + 1,
               updated_at: new Date().toISOString(),
             })
             .eq('id', winner.user_id);
