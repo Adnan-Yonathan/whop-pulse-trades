@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "frosted-ui";
+import { cn } from "@/lib/utils";
 import { TopThree } from "./TopThree";
 import { LeaderboardTable } from "./LeaderboardTable";
 import { PersonalCard } from "./PersonalCard";
@@ -87,7 +88,7 @@ export function PulseTradesLeaderboard({ experienceId, currentUserId, isAdmin }:
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="text-gray-6">Loading leaderboard...</div>
+        <div className="text-muted-foreground">Loading leaderboard...</div>
       </div>
     );
   }
@@ -97,10 +98,10 @@ export function PulseTradesLeaderboard({ experienceId, currentUserId, isAdmin }:
       {/* Header with submission button */}
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-gray-9">
+          <h2 className="text-2xl font-bold text-foreground">
             {activeTab === 'daily' ? 'Daily' : 'Weekly'} Leaderboard
           </h2>
-          <p className="text-gray-6">
+          <p className="text-muted-foreground">
             {activeTab === 'daily' 
               ? 'Rankings based on today\'s trading performance'
               : 'Rankings based on this week\'s cumulative performance'
@@ -111,7 +112,7 @@ export function PulseTradesLeaderboard({ experienceId, currentUserId, isAdmin }:
         <Button 
           onClick={() => setIsSubmissionModalOpen(true)}
           disabled={hasSubmittedToday && activeTab === 'daily'}
-          className={hasSubmittedToday ? 'opacity-50' : ''}
+          className={cn(hasSubmittedToday && 'opacity-50')}
         >
           {hasSubmittedToday && activeTab === 'daily' ? 'Already Submitted Today' : 'Submit P&L'}
         </Button>
@@ -146,22 +147,22 @@ export function PulseTradesLeaderboard({ experienceId, currentUserId, isAdmin }:
       {/* Top 3 Podium */}
       {topThree.length > 0 && (
         <div>
-          <h3 className="text-xl font-semibold text-gray-9 mb-4">Top Performers</h3>
+          <h3 className="text-xl font-semibold text-foreground mb-4">Top Performers</h3>
           <TopThree topThree={topThree} />
         </div>
       )}
 
       {/* Full Leaderboard */}
       <div>
-        <h3 className="text-xl font-semibold text-gray-9 mb-4">
+        <h3 className="text-xl font-semibold text-foreground mb-4">
           Full Rankings ({leaderboard.length} participants)
         </h3>
         
         {leaderboard.length > 0 ? (
           <LeaderboardTable leaderboard={leaderboard} currentUserId={currentUserId} />
         ) : (
-          <div className="bg-white rounded-lg border p-8 text-center">
-            <p className="text-gray-6">
+          <div className="bg-card rounded-lg border p-8 text-center">
+            <p className="text-muted-foreground">
               {activeTab === 'daily' 
                 ? 'No submissions yet today. Be the first to submit your P&L!'
                 : 'No submissions yet this week. Start submitting your daily P&L to appear here!'

@@ -1,4 +1,5 @@
 import { Badge } from "frosted-ui";
+import { cn } from "@/lib/utils";
 import type { LeaderboardEntry } from "@/types/database";
 
 interface TopThreeProps {
@@ -27,7 +28,7 @@ export function TopThree({ topThree }: TopThreeProps) {
             </div>
           </div>
           <div className="mt-2">
-            <div className="text-lg font-bold text-gray-9">
+            <div className="text-lg font-bold text-foreground">
               {entry.percentage_gain > 0 ? '+' : ''}{entry.percentage_gain.toFixed(2)}%
             </div>
             {entry.prestige_level > 0 && (
