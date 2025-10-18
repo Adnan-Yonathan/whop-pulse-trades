@@ -1,3 +1,4 @@
+import { WhopApp } from "@whop/react/components";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -27,7 +28,11 @@ export default function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 		>
-			{children}
+			{process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_WHOP_APP_ID ? (
+				<WhopApp>{children}</WhopApp>
+			) : (
+				children
+			)}
 		</body>
 		</html>
 	);

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button, Card, Badge, Dialog } from "frosted-ui";
+import { Button, Card, Badge } from "frosted-ui";
 import { supabase } from "@/lib/supabase";
 
 interface AdminDashboardProps {

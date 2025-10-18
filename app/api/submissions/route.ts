@@ -9,11 +9,13 @@ export async function POST(request: NextRequest): Promise<Response> {
     const headersList = await headers();
     const { userId } = await whopSdk.verifyUserToken(headersList);
     
-    const body = await request.json();
-    const { experienceId, percentageGain, proofImage } = body;
+    const formData = await request.formData();
+    const experienceId = formData.get('experienceId') as string;
+    const percentageGain = parseFloat(formData.get('percentageGain') as string);
+    const proofImage = formData.get('proofImage') as File | null;
 
     // Validate input
-    if (!experienceId || typeof percentageGain !== 'number') {
+    if (!experienceId || isNaN(percentageGain)) {
       return Response.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
