@@ -12,6 +12,12 @@
 		"@vercel/functions": "^2.0.3",
 		"@whop/api": "^0.0.50",
 		"@whop/react": "0.2.36",
+		"@whop/sdk": "0.0.1-canary.0",
+		"@supabase/supabase-js": "^2.45.4",
+		"date-fns": "^4.1.0",
+		"date-fns-tz": "^4.0.1",
+		"frosted-ui": "0.0.1-canary.81",
+		"json2csv": "^6.1.0",
 		"next": "15.3.2",
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0"

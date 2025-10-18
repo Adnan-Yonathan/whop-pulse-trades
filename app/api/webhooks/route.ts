@@ -1,5 +1,7 @@
 import { waitUntil } from "@vercel/functions";
 import { makeWebhookValidator } from "@whop/api";
+import { whopSdk } from "@/lib/whop-sdk";
+import { supabaseAdmin } from "@/lib/supabase";
 import type { NextRequest } from "next/server";
 
 const validateWebhook = makeWebhookValidator({
@@ -15,14 +17,10 @@ export async function POST(request: NextRequest): Promise<Response> {
 		const { id, final_amount, amount_after_fees, currency, user_id } =
 			webhookData.data;
 
-		// final_amount is the amount the user paid
-		// amount_after_fees is the amount that is received by you, after card fees and processing fees are taken out
-
 		console.log(
 			`Payment ${id} succeeded for ${user_id} with amount ${final_amount} ${currency}`,
 		);
 
-		// if you need to do work that takes a long time, use waitUntil to run it in the background
 		waitUntil(
 			potentiallyLongRunningHandler(
 				user_id,
@@ -31,6 +29,24 @@ export async function POST(request: NextRequest): Promise<Response> {
 				amount_after_fees,
 			),
 		);
+	}
+
+	// Handle membership events for user sync
+	if (webhookData.action === "membership.went_valid") {
+		const { user_id, experience_id } = webhookData.data;
+		
+		console.log(`Membership went valid for user ${user_id} in experience ${experience_id}`);
+		
+		waitUntil(syncUserToDatabase(user_id));
+	}
+
+	if (webhookData.action === "membership.went_invalid") {
+		const { user_id, experience_id } = webhookData.data;
+		
+		console.log(`Membership went invalid for user ${user_id} in experience ${experience_id}`);
+		
+		// Note: We don't delete user data, just log the event
+		// User data is preserved for historical leaderboard records
 	}
 
 	// Make sure to return a 2xx status code quickly. Otherwise the webhook will be retried.
@@ -45,4 +61,45 @@ async function potentiallyLongRunningHandler(
 ) {
 	// This is a placeholder for a potentially long running operation
 	// In a real scenario, you might need to fetch user data, update a database, etc.
+}
+
+async function syncUserToDatabase(whopUserId: string) {
+	try {
+		// Fetch user data from Whop API
+		const user = await whopSdk.users.getUser({ userId: whopUserId });
+		
+		// Check if user already exists in database
+		const { data: existingUser } = await supabaseAdmin
+			.from('users')
+			.select('id')
+			.eq('whop_user_id', whopUserId)
+			.single();
+
+		if (existingUser) {
+			// Update existing user
+			await supabaseAdmin
+				.from('users')
+				.update({
+					username: user.username,
+					name: user.name,
+					updated_at: new Date().toISOString(),
+				})
+				.eq('whop_user_id', whopUserId);
+			
+			console.log(`Updated user ${whopUserId} in database`);
+		} else {
+			// Create new user
+			await supabaseAdmin
+				.from('users')
+				.insert({
+					whop_user_id: whopUserId,
+					username: user.username,
+					name: user.name,
+				});
+			
+			console.log(`Created new user ${whopUserId} in database`);
+		}
+	} catch (error) {
+		console.error(`Failed to sync user ${whopUserId}:`, error);
+	}
 }

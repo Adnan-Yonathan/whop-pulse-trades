@@ -1,37 +1,108 @@
-This is a template for a whop app built in NextJS. Fork it and keep the parts you need for your app. 
+# Pulse Trades
 
-# Whop NextJS App Template
+A trading community gamification system built for the Whop ecosystem. Features daily leaderboards, prestige badges, proof verification, and admin controls.
 
-To run this project: 
+## Features
 
-1. Install dependencies with: `pnpm i`
+- **Daily Leaderboards**: Rank members by percentage gain (1% = 1 point)
+- **Prestige System**: Platinum badges for daily winners that stay forever
+- **Proof Verification**: Members can submit proof images (admin-only viewing)
+- **Admin Dashboard**: Community stats, manual resets, CSV exports
+- **Automatic Resets**: Daily resets at midnight ET with prestige awards
+- **Weekly Tracking**: Cumulative weekly leaderboards
+- **Webhook Integration**: Auto-sync Whop members to database
 
-2. Create a Whop App on your [whop developer dashboard](https://whop.com/dashboard/developer/), then go to the "Hosting" section and:
-	- Ensure the "Base URL" is set to the domain you intend to deploy the site on.
-	- Ensure the "App path" is set to `/experiences/[experienceId]`
-	- Ensure the "Dashboard path" is set to `/dashboard/[companyId]` 
-	- Ensure the "Discover path" is set to `/discover` 
+## Tech Stack
 
-3. Copy the environment variables from the `.env.development` into a `.env.local`. Ensure to use real values from the whop dashboard.
+- **Frontend**: Next.js 15, React 19, TypeScript
+- **UI**: Frosted UI (Whop's design system)
+- **Database**: Supabase (PostgreSQL)
+- **Storage**: Supabase Storage for proof images
+- **Authentication**: Whop SDK
+- **Deployment**: Vercel with cron jobs
 
-4. Go to a whop created in the same org as the app you created. Navigate to the tools section and add your app.
+## Setup Instructions
 
-5. Run `pnpm dev` to start the dev server. Then in the top right of the window find a translucent settings icon. Select "localhost". The default port 3000 should work.
+### 1. Database Setup
 
-## Deploying
+1. Create a new Supabase project at [supabase.com](https://supabase.com)
+2. Go to the SQL Editor and run the schema from `supabase-schema.sql`
+3. Create a storage bucket called `proof-images` (should be created automatically by the schema)
 
-1. Upload your fork / copy of this template to github. 
+### 2. Environment Variables
 
-2. Go to [Vercel](https://vercel.com/new) and link the repository. Deploy your application with the environment variables from your `.env.local`
+Copy `env.example` to `.env.local` and fill in your credentials:
 
-3. If necessary update you "Base Domain" and webhook callback urls on the app settings page on the whop dashboard.
+```bash
+cp env.example .env.local
+```
 
-## Troubleshooting
+Required variables:
+- **Whop Configuration**: Get these from your Whop Developer Dashboard
+- **Supabase Configuration**: Get these from your Supabase project settings
+- **CRON_SECRET**: Generate a secure random string for cron job authentication
 
-**App not loading properly?** Make sure to set the "App path" in your Whop developer dashboard. The placeholder text in the UI does not mean it's set - you must explicitly enter `/experiences/[experienceId]` (or your chosen path name)
-a
+### 3. Whop App Configuration
 
-**Make sure to add env.local** Make sure to get the real app environment vairables from your whop dashboard and set them in .env.local
+1. Create a Whop app in your [Developer Dashboard](https://whop.com/dashboard/developer/)
+2. Set the following paths in your app settings:
+   - **App path**: `/experiences/[experienceId]`
+   - **Dashboard path**: `/dashboard/[companyId]`
+   - **Discover path**: `/discover`
+3. Configure webhook endpoints to point to your deployed app's `/api/webhooks` route
 
+### 4. Installation
 
-For more info, see our docs at https://dev.whop.com/introduction
+```bash
+# Install dependencies
+pnpm install
+
+# Start development server
+pnpm dev
+```
+
+### 5. Deployment
+
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Add all environment variables to Vercel
+4. Deploy
+
+The cron job will automatically run daily at 5 AM UTC (midnight ET) to reset leaderboards and award prestige.
+
+## How It Works
+
+1. **Member Access**: Whop SDK validates membership and syncs users to Supabase
+2. **Daily Submissions**: Members submit their P&L percentage once per day
+3. **Leaderboard Ranking**: Real-time rankings based on percentage gain
+4. **Prestige Awards**: Daily winners receive platinum badges at reset time
+5. **Admin Management**: Admins can verify proofs, reset leaderboards, export data
+
+## Database Schema
+
+- **users**: Whop user data with prestige levels
+- **submissions**: Daily P&L submissions with proof images
+- **leaderboard_resets**: Audit log of resets (manual and automatic)
+
+## API Endpoints
+
+- `POST /api/submissions` - Submit daily P&L
+- `GET /api/leaderboard` - Fetch leaderboard data
+- `GET /api/admin/stats` - Community statistics
+- `POST /api/admin/reset` - Manual leaderboard reset
+- `GET /api/admin/export` - Export CSV data
+- `GET /api/cron/daily-reset` - Automated daily reset
+
+## Customization
+
+- Modify reset times by changing the cron schedule in `vercel.json`
+- Adjust timezone handling in `lib/utils/timezone.ts`
+- Customize UI themes by modifying Frosted UI components
+- Add additional leaderboard types or scoring systems
+
+## Support
+
+For issues or questions:
+- Check the [Whop Documentation](https://dev.whop.com)
+- Review Supabase documentation for database queries
+- Ensure all environment variables are properly configured

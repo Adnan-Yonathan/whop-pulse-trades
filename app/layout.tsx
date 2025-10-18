@@ -1,4 +1,5 @@
 import { WhopApp } from "@whop/react/components";
+import { TooltipProvider } from "frosted-ui";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -14,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-	title: "Whop App",
-	description: "My Whop App",
+	title: "Pulse Trades",
+	description: "Trading community gamification system with daily leaderboards and prestige badges",
 };
 
 export default function RootLayout({
@@ -27,9 +28,11 @@ export default function RootLayout({
 		<html lang="en" suppressHydrationWarning>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-			>
+		>
+			<TooltipProvider>
 				<WhopApp>{children}</WhopApp>
-			</body>
+			</TooltipProvider>
+		</body>
 		</html>
 	);
 }
