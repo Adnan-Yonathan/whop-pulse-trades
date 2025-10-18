@@ -28,7 +28,7 @@ export async function POST(request: NextRequest): Promise<Response> {
     }
 
     // Get or create user in database
-    const { data: user } = await supabaseAdmin
+    let { data: user } = await supabaseAdmin
       .from('users')
       .select('id')
       .eq('whop_user_id', userId)

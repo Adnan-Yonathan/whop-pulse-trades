@@ -33,17 +33,20 @@ export async function POST(request: NextRequest): Promise<Response> {
 
 	// Handle membership events for user sync
 	if (webhookData.action === "membership.went_valid") {
-		const { user_id, experience_id } = webhookData.data;
+		const { user_id } = webhookData.data;
 		
-		console.log(`Membership went valid for user ${user_id} in experience ${experience_id}`);
-		
-		waitUntil(syncUserToDatabase(user_id));
+		if (user_id) {
+			console.log(`Membership went valid for user ${user_id}`);
+			waitUntil(syncUserToDatabase(user_id));
+		}
 	}
 
 	if (webhookData.action === "membership.went_invalid") {
-		const { user_id, experience_id } = webhookData.data;
+		const { user_id } = webhookData.data;
 		
-		console.log(`Membership went invalid for user ${user_id} in experience ${experience_id}`);
+		if (user_id) {
+			console.log(`Membership went invalid for user ${user_id}`);
+		}
 		
 		// Note: We don't delete user data, just log the event
 		// User data is preserved for historical leaderboard records

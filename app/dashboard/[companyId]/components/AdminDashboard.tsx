@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button, Card, Badge, Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "frosted-ui";
+import { Button, Card, Badge, Dialog } from "frosted-ui";
 import { supabase } from "@/lib/supabase";
 
 interface AdminDashboardProps {
@@ -190,13 +190,13 @@ export function AdminDashboard({ companyId }: AdminDashboardProps) {
       <Card className="p-6">
         <h3 className="text-lg font-semibold text-gray-9 mb-4">Admin Actions</h3>
         <div className="flex flex-wrap gap-3">
-          <Button onClick={() => setShowResetDialog(true)} variant="destructive">
+          <Button onClick={() => setShowResetDialog(true)} variant="solid" className="bg-red-600 hover:bg-red-700 text-white">
             Reset Leaderboard
           </Button>
-          <Button onClick={() => handleExport('daily')} variant="outline">
+          <Button onClick={() => handleExport('daily')} variant="soft">
             Export Daily CSV
           </Button>
-          <Button onClick={() => handleExport('weekly')} variant="outline">
+          <Button onClick={() => handleExport('weekly')} variant="soft">
             Export Weekly CSV
           </Button>
         </div>
@@ -244,8 +244,8 @@ export function AdminDashboard({ companyId }: AdminDashboardProps) {
                     <td className="px-6 py-4 whitespace-nowrap text-center">
                       {submission.proof_image_url ? (
                         <Button
-                          size="sm"
-                          variant="outline"
+                          size="2"
+                          variant="soft"
                           onClick={() => handleImageClick(submission.proof_image_url!)}
                         >
                           View Proof
@@ -266,41 +266,46 @@ export function AdminDashboard({ companyId }: AdminDashboardProps) {
         )}
       </Card>
 
-      {/* Reset Dialog */}
-      <Dialog open={showResetDialog} onOpenChange={setShowResetDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Reset Leaderboard</DialogTitle>
-            <DialogDescription>
+      {/* Reset Modal */}
+      {showResetDialog && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+            <h3 className="text-lg font-semibold mb-2">Reset Leaderboard</h3>
+            <p className="text-gray-600 mb-4">
               This will reset the leaderboard and award prestige to yesterday's winner. This action cannot be undone.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowResetDialog(false)}>
-              Cancel
-            </Button>
-            <Button variant="destructive" onClick={() => handleReset('daily')}>
-              Reset Daily Leaderboard
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+            </p>
+            <div className="flex justify-end space-x-2">
+              <Button variant="soft" onClick={() => setShowResetDialog(false)}>
+                Cancel
+              </Button>
+              <Button variant="solid" className="bg-red-600 hover:bg-red-700 text-white" onClick={() => handleReset('daily')}>
+                Reset Daily Leaderboard
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
-      {/* Image Dialog */}
-      <Dialog open={showImageDialog} onOpenChange={setShowImageDialog}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle>Proof Image</DialogTitle>
-          </DialogHeader>
-          {selectedImage && (
-            <img 
-              src={selectedImage} 
-              alt="Proof image" 
-              className="max-w-full h-auto rounded-lg"
-            />
-          )}
-        </DialogContent>
-      </Dialog>
+      {/* Image Modal */}
+      {showImageDialog && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-2xl w-full mx-4">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold">Proof Image</h3>
+              <Button variant="soft" onClick={() => setShowImageDialog(false)}>
+                Close
+              </Button>
+            </div>
+            {selectedImage && (
+              <img 
+                src={selectedImage} 
+                alt="Proof image" 
+                className="max-w-full h-auto rounded-lg"
+              />
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

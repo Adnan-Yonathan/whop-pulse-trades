@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button, Tabs } from "frosted-ui";
+import { Button } from "frosted-ui";
 import { TopThree } from "./TopThree";
 import { LeaderboardTable } from "./LeaderboardTable";
 import { PersonalCard } from "./PersonalCard";
@@ -118,12 +118,30 @@ export function PulseTradesLeaderboard({ experienceId, currentUserId, isAdmin }:
       </div>
 
       {/* Tabs */}
-      <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'daily' | 'weekly')}>
-        <Tabs.List>
-          <Tabs.Trigger value="daily">Daily</Tabs.Trigger>
-          <Tabs.Trigger value="weekly">Weekly</Tabs.Trigger>
-        </Tabs.List>
-      </Tabs>
+      <div className="border-b border-gray-200">
+        <nav className="-mb-px flex space-x-8">
+          <button
+            onClick={() => setActiveTab('daily')}
+            className={`py-2 px-1 border-b-2 font-medium text-sm ${
+              activeTab === 'daily'
+                ? 'border-blue-500 text-blue-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+            }`}
+          >
+            Daily
+          </button>
+          <button
+            onClick={() => setActiveTab('weekly')}
+            className={`py-2 px-1 border-b-2 font-medium text-sm ${
+              activeTab === 'weekly'
+                ? 'border-blue-500 text-blue-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+            }`}
+          >
+            Weekly
+          </button>
+        </nav>
+      </div>
 
       {/* Top 3 Podium */}
       {topThree.length > 0 && (

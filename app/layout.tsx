@@ -1,5 +1,3 @@
-import { WhopApp } from "@whop/react/components";
-import { TooltipProvider } from "frosted-ui";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -29,9 +27,7 @@ export default function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 		>
-			<TooltipProvider>
-				<WhopApp>{children}</WhopApp>
-			</TooltipProvider>
+			{children}
 		</body>
 		</html>
 	);

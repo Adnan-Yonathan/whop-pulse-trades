@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, Button, Input, Label, Card } from "frosted-ui";
-import { Toast } from "frosted-ui";
+import { Button, Card } from "frosted-ui";
 
 interface SubmissionModalProps {
   isOpen: boolean;
@@ -52,8 +51,8 @@ export function SubmissionModal({ isOpen, onClose, onSuccess, experienceId }: Su
         throw new Error(data.error || 'Submission failed');
       }
 
-      // Show success toast
-      Toast.success('Submission successful!');
+      // Show success message
+      alert('Submission successful!');
       
       // Reset form and close modal
       setPercentageGain("");
@@ -77,43 +76,49 @@ export function SubmissionModal({ isOpen, onClose, onSuccess, experienceId }: Su
     }
   };
 
+  if (!isOpen) return null;
+
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <Dialog.Content className="max-w-md">
-        <DialogHeader>
-          <DialogTitle>Submit Your P&L</DialogTitle>
-          <DialogDescription>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+        <div className="mb-4">
+          <h3 className="text-lg font-semibold">Submit Your P&L</h3>
+          <p className="text-gray-600 text-sm mt-1">
             Submit your percentage gain or loss for today. You can only submit once per day.
-          </DialogDescription>
-        </DialogHeader>
+          </p>
+        </div>
 
         <div className="space-y-4">
           <div>
-            <Label htmlFor="percentageGain">Percentage Gain/Loss (%)</Label>
-            <Input
+            <label htmlFor="percentageGain" className="block text-sm font-medium text-gray-700 mb-1">
+              Percentage Gain/Loss (%)
+            </label>
+            <input
               id="percentageGain"
               type="number"
               step="0.01"
               placeholder="e.g., 2.5 or -1.2"
               value={percentageGain}
               onChange={(e) => setPercentageGain(e.target.value)}
-              className="mt-1"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             />
-            <p className="text-xs text-gray-6 mt-1">
+            <p className="text-xs text-gray-600 mt-1">
               Enter positive for gains, negative for losses
             </p>
           </div>
 
           <div>
-            <Label htmlFor="proofImage">Proof Image (Optional)</Label>
-            <Input
+            <label htmlFor="proofImage" className="block text-sm font-medium text-gray-700 mb-1">
+              Proof Image (Optional)
+            </label>
+            <input
               id="proofImage"
               type="file"
               accept="image/*"
               onChange={handleFileChange}
-              className="mt-1"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             />
-            <p className="text-xs text-gray-6 mt-1">
+            <p className="text-xs text-gray-600 mt-1">
               Upload a screenshot of your trading results for verification
             </p>
           </div>
@@ -133,15 +138,15 @@ export function SubmissionModal({ isOpen, onClose, onSuccess, experienceId }: Su
           )}
         </div>
 
-        <DialogFooter className="flex justify-end space-x-2">
-          <Button variant="outline" onClick={onClose} disabled={isSubmitting}>
+        <div className="flex justify-end space-x-2 mt-6">
+          <Button variant="soft" onClick={onClose} disabled={isSubmitting}>
             Cancel
           </Button>
           <Button onClick={handleSubmit} disabled={isSubmitting}>
             {isSubmitting ? 'Submitting...' : 'Submit'}
           </Button>
-        </DialogFooter>
-      </Dialog.Content>
-    </Dialog>
+        </div>
+      </div>
+    </div>
   );
 }
