@@ -53,7 +53,7 @@ export async function POST(request: NextRequest): Promise<Response> {
         return Response.json({ error: 'Failed to create user' }, { status: 500 });
       }
 
-      user.id = newUser.id;
+      user = { id: newUser.id };
     }
 
     // Check if user already submitted today
