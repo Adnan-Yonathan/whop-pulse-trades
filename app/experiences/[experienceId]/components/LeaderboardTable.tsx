@@ -1,4 +1,5 @@
 import { Badge } from "frosted-ui";
+import { cn } from "@/lib/utils";
 import type { LeaderboardEntry } from "@/types/database";
 
 interface LeaderboardTableProps {
@@ -8,62 +9,70 @@ interface LeaderboardTableProps {
 
 export function LeaderboardTable({ leaderboard, currentUserId }: LeaderboardTableProps) {
   return (
-    <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
-      <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Gain</th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Submitted</th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {leaderboard.map((entry) => (
-              <tr 
-                key={entry.user_id} 
-                className={entry.user_id === currentUserId ? 'bg-blue-50' : 'hover:bg-gray-50'}
-              >
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-lg font-bold">#{entry.rank}</span>
-                    {entry.rank === 1 && entry.prestige_level === 0 && (
-                      <span className="text-yellow-500">👑</span>
-                    )}
-                  </div>
-                </td>
-                
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex items-center space-x-2">
-                    <div>
-                      <div className="font-medium">{entry.name}</div>
-                      <div className="text-sm text-gray-600">@{entry.username}</div>
+    <div className="bg-[var(--robinhood-bg)] rounded-lg border border-[var(--robinhood-border)] overflow-hidden">
+      <div className="divide-y divide-[var(--robinhood-border)]">
+        {leaderboard.map((entry) => {
+          const isPositive = entry.percentage_gain >= 0;
+          const isCurrentUser = entry.user_id === currentUserId;
+          
+          return (
+            <div 
+              key={entry.user_id} 
+              className={cn(
+                "px-6 py-4 hover:bg-[var(--robinhood-hover)] cursor-pointer",
+                isCurrentUser && "bg-[var(--robinhood-hover)] border-l-2 border-[var(--robinhood-green)]"
+              )}
+            >
+              <div className="flex items-center justify-between">
+                {/* Left side - Rank and User info */}
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-3">
+                    {/* Rank badge */}
+                    <div className={cn(
+                      "w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold",
+                      entry.rank === 1 ? "bg-[var(--robinhood-green)] text-[var(--robinhood-bg)]" :
+                      entry.rank === 2 ? "bg-[var(--robinhood-muted)] text-[var(--robinhood-bg)]" :
+                      entry.rank === 3 ? "bg-[var(--robinhood-red)] text-[var(--robinhood-text)]" :
+                      "bg-[var(--robinhood-card)] text-[var(--robinhood-text)] border border-[var(--robinhood-border)]"
+                    )}>
+                      {entry.rank}
                     </div>
-                    {entry.prestige_level > 0 && (
-                      <Badge className="bg-gradient-to-r from-purple-400 via-pink-500 to-purple-600 text-white text-xs">
-                        {entry.prestige_level}
-                      </Badge>
-                    )}
+                    
+                    {/* User info */}
+                    <div className="flex flex-col">
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium text-[var(--robinhood-text)] text-base">
+                          {entry.name}
+                        </span>
+                        {entry.prestige_level > 0 && (
+                          <Badge className="bg-[var(--robinhood-green)] text-[var(--robinhood-bg)] text-xs px-2 py-1 rounded-full">
+                            P{entry.prestige_level}
+                          </Badge>
+                        )}
+                      </div>
+                      <span className="text-[var(--robinhood-muted)] text-sm">
+                        @{entry.username}
+                      </span>
+                    </div>
                   </div>
-                </td>
+                </div>
                 
-                <td className="px-6 py-4 whitespace-nowrap text-right">
-                  <span className={`font-bold ${entry.percentage_gain > 0 ? 'text-green-600' : entry.percentage_gain < 0 ? 'text-red-600' : 'text-gray-900'}`}>
-                    {entry.percentage_gain > 0 ? '+' : ''}{entry.percentage_gain.toFixed(2)}%
-                  </span>
-                </td>
-                
-                <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-600">
-                  {new Date(entry.submitted_at).toLocaleTimeString([], { 
-                    hour: '2-digit', 
-                    minute: '2-digit' 
-                  })}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                {/* Right side - Performance */}
+                <div className="flex flex-col items-end">
+                  <div className={cn(
+                    "font-bold text-lg",
+                    isPositive ? "text-[var(--robinhood-green)]" : "text-[var(--robinhood-red)]"
+                  )}>
+                    {isPositive ? '+' : ''}{entry.percentage_gain.toFixed(2)}%
+                  </div>
+                  <div className="text-[var(--robinhood-muted)] text-xs">
+                    Today
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

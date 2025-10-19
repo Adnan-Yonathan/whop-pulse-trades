@@ -148,7 +148,7 @@ export function AdminDashboard({ companyId }: AdminDashboardProps) {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="text-muted-foreground">Loading admin dashboard...</div>
+        <div className="text-[var(--robinhood-muted)]">Loading admin dashboard...</div>
       </div>
     );
   }
@@ -159,28 +159,28 @@ export function AdminDashboard({ companyId }: AdminDashboardProps) {
       {stats && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <Card className="p-4">
-            <div className="text-sm text-muted-foreground">Daily Submissions</div>
-            <div className="text-2xl font-bold text-foreground">{stats.daily.submissions}</div>
+            <div className="text-sm text-[var(--robinhood-muted)]">Daily Submissions</div>
+            <div className="text-2xl font-bold text-[var(--robinhood-text)]">{stats.daily.submissions}</div>
           </Card>
           
           <Card className="p-4">
-            <div className="text-sm text-muted-foreground">Daily Average</div>
-            <div className={cn("text-2xl font-bold", stats.daily.averageGain > 0 ? 'text-green-600' : 'text-red-600')}>
+            <div className="text-sm text-[var(--robinhood-muted)]">Daily Average</div>
+            <div className={cn("text-2xl font-bold", stats.daily.averageGain > 0 ? 'text-[var(--robinhood-green)]' : 'text-[var(--robinhood-red)]')}>
               {stats.daily.averageGain > 0 ? '+' : ''}{stats.daily.averageGain}%
             </div>
           </Card>
           
           <Card className="p-4">
-            <div className="text-sm text-muted-foreground">Total Members</div>
-            <div className="text-2xl font-bold text-foreground">{stats.totalMembers}</div>
+            <div className="text-sm text-[var(--robinhood-muted)]">Total Members</div>
+            <div className="text-2xl font-bold text-[var(--robinhood-text)]">{stats.totalMembers}</div>
           </Card>
           
           <Card className="p-4">
-            <div className="text-sm text-muted-foreground">Best Performer</div>
-            <div className="text-lg font-bold text-green-600">
+            <div className="text-sm text-[var(--robinhood-muted)]">Best Performer</div>
+            <div className="text-lg font-bold text-[var(--robinhood-green)]">
               {stats.daily.bestGain > 0 ? '+' : ''}{stats.daily.bestGain}%
             </div>
-            <div className="text-sm text-muted-foreground">
+            <div className="text-sm text-[var(--robinhood-muted)]">
               {stats.daily.bestUser ? `@${stats.daily.bestUser.username}` : 'N/A'}
             </div>
           </Card>
@@ -189,7 +189,7 @@ export function AdminDashboard({ companyId }: AdminDashboardProps) {
 
       {/* Admin Actions */}
       <Card className="p-6">
-        <h3 className="text-lg font-semibold text-foreground mb-4">Admin Actions</h3>
+        <h3 className="text-lg font-semibold text-[var(--robinhood-text)] mb-4">Admin Actions</h3>
         <div className="flex flex-wrap gap-3">
           <Button onClick={() => setShowResetDialog(true)} variant="solid" className="bg-red-600 hover:bg-red-700 text-white">
             Reset Leaderboard
@@ -205,38 +205,38 @@ export function AdminDashboard({ companyId }: AdminDashboardProps) {
 
       {/* Today's Submissions */}
       <Card className="p-6">
-        <h3 className="text-lg font-semibold text-foreground mb-4">
+        <h3 className="text-lg font-semibold text-[var(--robinhood-text)] mb-4">
           Today's Submissions ({submissions.length})
         </h3>
         
         {submissions.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-muted/50">
+              <thead className="bg-[var(--robinhood-card)]">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Rank</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">User</th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider">Gain</th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider">Submitted</th>
-                  <th className="px-6 py-3 text-center text-xs font-medium text-muted-foreground uppercase tracking-wider">Proof</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-[var(--robinhood-muted)] uppercase tracking-wider">Rank</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-[var(--robinhood-muted)] uppercase tracking-wider">User</th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-[var(--robinhood-muted)] uppercase tracking-wider">Gain</th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-[var(--robinhood-muted)] uppercase tracking-wider">Submitted</th>
+                  <th className="px-6 py-3 text-center text-xs font-medium text-[var(--robinhood-muted)] uppercase tracking-wider">Proof</th>
                 </tr>
               </thead>
-              <tbody className="bg-card divide-y divide-border">
+              <tbody className="bg-[var(--robinhood-bg)] divide-y divide-[var(--robinhood-border)]">
                 {submissions.map((submission, index) => (
                   <tr key={submission.id}>
                     <td className="px-6 py-4 whitespace-nowrap font-medium">#{index + 1}</td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div>
                         <div className="font-medium">{submission.user.name}</div>
-                        <div className="text-sm text-muted-foreground">@{submission.user.username}</div>
+                        <div className="text-sm text-[var(--robinhood-muted)]">@{submission.user.username}</div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right">
-                      <span className={cn("font-bold", submission.percentage_gain > 0 ? 'text-green-600' : submission.percentage_gain < 0 ? 'text-red-600' : 'text-foreground')}>
+                      <span className={cn("font-bold", submission.percentage_gain > 0 ? 'text-[var(--robinhood-green)]' : submission.percentage_gain < 0 ? 'text-[var(--robinhood-red)]' : 'text-[var(--robinhood-text)]')}>
                         {submission.percentage_gain > 0 ? '+' : ''}{submission.percentage_gain.toFixed(2)}%
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-muted-foreground">
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-[var(--robinhood-muted)]">
                       {new Date(submission.submitted_at).toLocaleTimeString([], { 
                         hour: '2-digit', 
                         minute: '2-digit' 
@@ -252,7 +252,7 @@ export function AdminDashboard({ companyId }: AdminDashboardProps) {
                           View Proof
                         </Button>
                       ) : (
-                        <span className="text-muted-foreground text-sm">No proof</span>
+                        <span className="text-[var(--robinhood-muted)] text-sm">No proof</span>
                       )}
                     </td>
                   </tr>
@@ -261,7 +261,7 @@ export function AdminDashboard({ companyId }: AdminDashboardProps) {
             </table>
           </div>
         ) : (
-          <div className="text-center py-8 text-muted-foreground">
+          <div className="text-center py-8 text-[var(--robinhood-muted)]">
             No submissions yet today
           </div>
         )}
@@ -270,9 +270,9 @@ export function AdminDashboard({ companyId }: AdminDashboardProps) {
       {/* Reset Modal */}
       {showResetDialog && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-card rounded-lg p-6 max-w-md w-full mx-4">
-            <h3 className="text-lg font-semibold mb-2">Reset Leaderboard</h3>
-            <p className="text-muted-foreground mb-4">
+          <div className="bg-[var(--robinhood-card)] rounded-lg p-6 max-w-md w-full mx-4 border border-[var(--robinhood-border)]">
+            <h3 className="text-lg font-semibold mb-2 text-[var(--robinhood-text)]">Reset Leaderboard</h3>
+            <p className="text-[var(--robinhood-muted)] mb-4">
               This will reset the leaderboard and award prestige to yesterday's winner. This action cannot be undone.
             </p>
             <div className="flex justify-end space-x-2">
@@ -290,9 +290,9 @@ export function AdminDashboard({ companyId }: AdminDashboardProps) {
       {/* Image Modal */}
       {showImageDialog && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-card rounded-lg p-6 max-w-2xl w-full mx-4">
+          <div className="bg-[var(--robinhood-card)] rounded-lg p-6 max-w-2xl w-full mx-4 border border-[var(--robinhood-border)]">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold">Proof Image</h3>
+              <h3 className="text-lg font-semibold text-[var(--robinhood-text)]">Proof Image</h3>
               <Button variant="soft" onClick={() => setShowImageDialog(false)}>
                 Close
               </Button>

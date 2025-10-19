@@ -7,38 +7,55 @@ interface TopThreeProps {
 }
 
 export function TopThree({ topThree }: TopThreeProps) {
-  const podiumColors = [
-    'bg-gradient-to-b from-yellow-400 to-yellow-600', // Gold
-    'bg-gradient-to-b from-gray-300 to-gray-500', // Silver
-    'bg-gradient-to-b from-orange-400 to-orange-600', // Bronze
-  ];
-
-  const podiumHeights = ['h-32', 'h-24', 'h-16'];
-  const medalEmojis = ['🥇', '🥈', '🥉'];
-
   return (
-    <div className="flex justify-center items-end space-x-4 mb-8">
-      {topThree.map((entry, index) => (
-        <div key={entry.user_id} className="text-center">
-          <div className={`${podiumColors[index]} ${podiumHeights[index]} w-24 rounded-t-lg flex flex-col items-center justify-end p-4 shadow-lg`}>
-            <div className="text-4xl mb-2">{medalEmojis[index]}</div>
-            <div className="text-white font-bold text-sm text-center">
-              <div className="truncate">{entry.name}</div>
-              <div className="text-xs opacity-90">@{entry.username}</div>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+      {topThree.map((entry, index) => {
+        const isPositive = entry.percentage_gain >= 0;
+        const rankColors = [
+          "bg-[var(--robinhood-green)] text-[var(--robinhood-bg)]", // 1st place
+          "bg-[var(--robinhood-muted)] text-[var(--robinhood-bg)]", // 2nd place
+          "bg-[var(--robinhood-red)] text-[var(--robinhood-text)]", // 3rd place
+        ];
+        
+        return (
+          <div key={entry.user_id} className="bg-[var(--robinhood-card)] rounded-lg border border-[var(--robinhood-border)] p-6 hover:bg-[var(--robinhood-hover)] transition-colors">
+            <div className="flex flex-col items-center text-center">
+              {/* Rank number */}
+              <div className={cn(
+                "w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold mb-4",
+                rankColors[index]
+              )}>
+                {index + 1}
+              </div>
+              
+              {/* User info */}
+              <div className="mb-3">
+                <div className="font-medium text-[var(--robinhood-text)] text-lg mb-1">
+                  {entry.name}
+                </div>
+                <div className="text-[var(--robinhood-muted)] text-sm">
+                  @{entry.username}
+                </div>
+              </div>
+              
+              {/* Performance */}
+              <div className={cn(
+                "font-bold text-xl mb-2",
+                isPositive ? "text-[var(--robinhood-green)]" : "text-[var(--robinhood-red)]"
+              )}>
+                {isPositive ? '+' : ''}{entry.percentage_gain.toFixed(2)}%
+              </div>
+              
+              {/* Prestige badge */}
+              {entry.prestige_level > 0 && (
+                <Badge className="bg-[var(--robinhood-green)] text-[var(--robinhood-bg)] text-xs px-3 py-1 rounded-full">
+                  Prestige {entry.prestige_level}
+                </Badge>
+              )}
             </div>
           </div>
-          <div className="mt-2">
-            <div className="text-lg font-bold text-foreground">
-              {entry.percentage_gain > 0 ? '+' : ''}{entry.percentage_gain.toFixed(2)}%
-            </div>
-            {entry.prestige_level > 0 && (
-              <Badge className="bg-gradient-to-r from-purple-400 via-pink-500 to-purple-600 text-white text-xs mt-1">
-                Prestige {entry.prestige_level}
-              </Badge>
-            )}
-          </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

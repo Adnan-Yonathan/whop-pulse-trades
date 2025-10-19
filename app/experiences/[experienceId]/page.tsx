@@ -1,6 +1,7 @@
 import { whopSdk } from "@/lib/whop-sdk";
 import { headers } from "next/headers";
 import { PulseTradesLeaderboard } from "./components/PulseTradesLeaderboard";
+import { StockTicker } from "./components/StockTicker";
 
 export default async function ExperiencePage({
 	params,
@@ -32,12 +33,12 @@ export default async function ExperiencePage({
 
 	if (!result.hasAccess) {
 		return (
-			<div className="flex justify-center items-center h-screen px-8">
+			<div className="min-h-screen bg-[var(--robinhood-bg)] flex justify-center items-center px-8">
 				<div className="text-center">
-					<h1 className="text-2xl font-bold text-gray-9 mb-4">
+					<h1 className="text-2xl font-bold text-[var(--robinhood-text)] mb-4">
 						Access Denied
 					</h1>
-					<p className="text-gray-6">
+					<p className="text-[var(--robinhood-muted)]">
 						You do not have access to this trading community.
 					</p>
 				</div>
@@ -46,17 +47,20 @@ export default async function ExperiencePage({
 	}
 
 	return (
-		<div className="min-h-screen bg-gray-a12">
-			<div className="max-w-6xl mx-auto px-4 py-8">
-				<div className="text-center mb-8">
-					<h1 className="text-4xl font-bold text-gray-9 mb-2">
+		<div className="min-h-screen bg-[var(--robinhood-bg)]">
+			{/* Stock Ticker */}
+			<StockTicker />
+			
+			<div className="max-w-6xl mx-auto px-4 py-6">
+				<div className="mb-6">
+					<h1 className="text-3xl font-bold text-[var(--robinhood-text)] mb-2">
 						Pulse Trades
 					</h1>
-					<p className="text-gray-6">
-						Welcome to <strong>{experience.name}</strong> trading leaderboard
+					<p className="text-[var(--robinhood-muted)] text-lg">
+						Welcome to <strong className="text-[var(--robinhood-text)]">{experience.name}</strong> trading leaderboard
 					</p>
-					<p className="text-sm text-gray-5 mt-2">
-						Hi <strong>{user.name}</strong> (@{user.username}) • Access Level: <strong>{accessLevel}</strong>
+					<p className="text-sm text-[var(--robinhood-muted)] mt-2">
+						Hi <strong className="text-[var(--robinhood-text)]">{user.name}</strong> (@{user.username}) • Access Level: <strong className="text-[var(--robinhood-green)]">{accessLevel}</strong>
 					</p>
 				</div>
 
