@@ -9,8 +9,8 @@ interface LeaderboardTableProps {
 
 export function LeaderboardTable({ leaderboard, currentUserId }: LeaderboardTableProps) {
   return (
-    <div className="bg-[var(--robinhood-bg)] rounded-lg border border-[var(--robinhood-border)] overflow-hidden">
-      <div className="divide-y divide-[var(--robinhood-border)]">
+    <div className="bg-robinhood-bg rounded-lg border border-robinhood-border overflow-hidden">
+      <div className="divide-y divide-robinhood-border">
         {leaderboard.map((entry) => {
           const isPositive = entry.percentage_gain >= 0;
           const isCurrentUser = entry.user_id === currentUserId;
@@ -19,8 +19,8 @@ export function LeaderboardTable({ leaderboard, currentUserId }: LeaderboardTabl
             <div 
               key={entry.user_id} 
               className={cn(
-                "px-6 py-4 hover:bg-[var(--robinhood-hover)] cursor-pointer",
-                isCurrentUser && "bg-[var(--robinhood-hover)] border-l-2 border-[var(--robinhood-green)]"
+                "px-6 py-4 hover:bg-robinhood-hover cursor-pointer transition-colors",
+                isCurrentUser && "bg-robinhood-hover border-l-2 border-robinhood-green"
               )}
             >
               <div className="flex items-center justify-between">
@@ -30,10 +30,10 @@ export function LeaderboardTable({ leaderboard, currentUserId }: LeaderboardTabl
                     {/* Rank badge */}
                     <div className={cn(
                       "w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold",
-                      entry.rank === 1 ? "bg-[var(--robinhood-green)] text-[var(--robinhood-bg)]" :
-                      entry.rank === 2 ? "bg-[var(--robinhood-muted)] text-[var(--robinhood-bg)]" :
-                      entry.rank === 3 ? "bg-[var(--robinhood-red)] text-[var(--robinhood-text)]" :
-                      "bg-[var(--robinhood-card)] text-[var(--robinhood-text)] border border-[var(--robinhood-border)]"
+                      entry.rank === 1 ? "bg-robinhood-green text-robinhood-bg" :
+                      entry.rank === 2 ? "bg-robinhood-muted text-robinhood-bg" :
+                      entry.rank === 3 ? "bg-robinhood-red text-robinhood-text" :
+                      "bg-robinhood-card text-robinhood-text border border-robinhood-border"
                     )}>
                       {entry.rank}
                     </div>
@@ -41,16 +41,16 @@ export function LeaderboardTable({ leaderboard, currentUserId }: LeaderboardTabl
                     {/* User info */}
                     <div className="flex flex-col">
                       <div className="flex items-center gap-2">
-                        <span className="font-medium text-[var(--robinhood-text)] text-base">
+                        <span className="font-medium text-robinhood-text text-base">
                           {entry.name}
                         </span>
                         {entry.prestige_level > 0 && (
-                          <Badge className="bg-[var(--robinhood-green)] text-[var(--robinhood-bg)] text-xs px-2 py-1 rounded-full">
+                          <Badge className="bg-robinhood-green text-robinhood-bg text-xs px-2 py-1 rounded-full">
                             P{entry.prestige_level}
                           </Badge>
                         )}
                       </div>
-                      <span className="text-[var(--robinhood-muted)] text-sm">
+                      <span className="text-robinhood-muted text-sm">
                         @{entry.username}
                       </span>
                     </div>
@@ -61,11 +61,11 @@ export function LeaderboardTable({ leaderboard, currentUserId }: LeaderboardTabl
                 <div className="flex flex-col items-end">
                   <div className={cn(
                     "font-bold text-lg",
-                    isPositive ? "text-[var(--robinhood-green)]" : "text-[var(--robinhood-red)]"
+                    isPositive ? "text-robinhood-green" : "text-robinhood-red"
                   )}>
                     {isPositive ? '+' : ''}{entry.percentage_gain.toFixed(2)}%
                   </div>
-                  <div className="text-[var(--robinhood-muted)] text-xs">
+                  <div className="text-robinhood-muted text-xs">
                     Today
                   </div>
                 </div>

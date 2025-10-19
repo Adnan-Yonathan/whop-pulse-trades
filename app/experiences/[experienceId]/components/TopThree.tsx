@@ -12,13 +12,13 @@ export function TopThree({ topThree }: TopThreeProps) {
       {topThree.map((entry, index) => {
         const isPositive = entry.percentage_gain >= 0;
         const rankColors = [
-          "bg-[var(--robinhood-green)] text-[var(--robinhood-bg)]", // 1st place
-          "bg-[var(--robinhood-muted)] text-[var(--robinhood-bg)]", // 2nd place
-          "bg-[var(--robinhood-red)] text-[var(--robinhood-text)]", // 3rd place
+          "bg-robinhood-green text-robinhood-bg", // 1st place
+          "bg-robinhood-muted text-robinhood-bg", // 2nd place
+          "bg-robinhood-red text-robinhood-text", // 3rd place
         ];
         
         return (
-          <div key={entry.user_id} className="bg-[var(--robinhood-card)] rounded-lg border border-[var(--robinhood-border)] p-6 hover:bg-[var(--robinhood-hover)] transition-colors">
+          <div key={entry.user_id} className="bg-robinhood-card rounded-lg border border-robinhood-border p-6 hover:bg-robinhood-hover transition-colors">
             <div className="flex flex-col items-center text-center">
               {/* Rank number */}
               <div className={cn(
@@ -30,10 +30,10 @@ export function TopThree({ topThree }: TopThreeProps) {
               
               {/* User info */}
               <div className="mb-3">
-                <div className="font-medium text-[var(--robinhood-text)] text-lg mb-1">
+                <div className="font-medium text-robinhood-text text-lg mb-1">
                   {entry.name}
                 </div>
-                <div className="text-[var(--robinhood-muted)] text-sm">
+                <div className="text-robinhood-muted text-sm">
                   @{entry.username}
                 </div>
               </div>
@@ -41,14 +41,14 @@ export function TopThree({ topThree }: TopThreeProps) {
               {/* Performance */}
               <div className={cn(
                 "font-bold text-xl mb-2",
-                isPositive ? "text-[var(--robinhood-green)]" : "text-[var(--robinhood-red)]"
+                isPositive ? "text-robinhood-green" : "text-robinhood-red"
               )}>
                 {isPositive ? '+' : ''}{entry.percentage_gain.toFixed(2)}%
               </div>
               
               {/* Prestige badge */}
               {entry.prestige_level > 0 && (
-                <Badge className="bg-[var(--robinhood-green)] text-[var(--robinhood-bg)] text-xs px-3 py-1 rounded-full">
+                <Badge className="bg-robinhood-green text-robinhood-bg text-xs px-3 py-1 rounded-full">
                   Prestige {entry.prestige_level}
                 </Badge>
               )}

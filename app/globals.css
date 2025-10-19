@@ -8,21 +8,8 @@
 @config '../tailwind.config.ts';
 
 /* Robinhood-inspired design system */
-:root {
-  --robinhood-bg: #0d0d0d;
-  --robinhood-card: #1a1a1a;
-  --robinhood-green: #00c805;
-  --robinhood-red: #ff5000;
-  --robinhood-text: #ffffff;
-  --robinhood-muted: #a0a0a0;
-  --robinhood-border: #2a2a2a;
-  --robinhood-hover: #1f1f1f;
-}
-
 body {
-	background: var(--robinhood-bg);
-	color: var(--robinhood-text);
-	font-family: 'Inter', -apple-system, system-ui, sans-serif;
+	@apply bg-robinhood-bg text-robinhood-text font-sans;
 }
 
 /* Smooth transitions for all interactive elements */
@@ -36,14 +23,13 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--robinhood-bg);
+  @apply bg-robinhood-bg;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--robinhood-border);
-  border-radius: 3px;
+  @apply bg-robinhood-border rounded-sm;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--robinhood-muted);
+  @apply bg-robinhood-muted;
 }

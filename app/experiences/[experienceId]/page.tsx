@@ -33,12 +33,12 @@ export default async function ExperiencePage({
 
 	if (!result.hasAccess) {
 		return (
-			<div className="min-h-screen bg-[var(--robinhood-bg)] flex justify-center items-center px-8">
+			<div className="min-h-screen bg-robinhood-bg flex justify-center items-center px-8">
 				<div className="text-center">
-					<h1 className="text-2xl font-bold text-[var(--robinhood-text)] mb-4">
+					<h1 className="text-2xl font-bold text-robinhood-text mb-4">
 						Access Denied
 					</h1>
-					<p className="text-[var(--robinhood-muted)]">
+					<p className="text-robinhood-muted">
 						You do not have access to this trading community.
 					</p>
 				</div>
@@ -47,20 +47,20 @@ export default async function ExperiencePage({
 	}
 
 	return (
-		<div className="min-h-screen bg-[var(--robinhood-bg)]">
+		<div className="min-h-screen bg-robinhood-bg">
 			{/* Stock Ticker */}
 			<StockTicker />
 			
 			<div className="max-w-6xl mx-auto px-4 py-6">
 				<div className="mb-6">
-					<h1 className="text-3xl font-bold text-[var(--robinhood-text)] mb-2">
+					<h1 className="text-3xl font-bold text-robinhood-text mb-2">
 						Pulse Trades
 					</h1>
-					<p className="text-[var(--robinhood-muted)] text-lg">
-						Welcome to <strong className="text-[var(--robinhood-text)]">{experience.name}</strong> trading leaderboard
+					<p className="text-robinhood-muted text-lg">
+						Welcome to <strong className="text-robinhood-text">{experience.name}</strong> trading leaderboard
 					</p>
-					<p className="text-sm text-[var(--robinhood-muted)] mt-2">
-						Hi <strong className="text-[var(--robinhood-text)]">{user.name}</strong> (@{user.username}) • Access Level: <strong className="text-[var(--robinhood-green)]">{accessLevel}</strong>
+					<p className="text-sm text-robinhood-muted mt-2">
+						Hi <strong className="text-robinhood-text">{user.name}</strong> (@{user.username}) • Access Level: <strong className="text-robinhood-green">{accessLevel}</strong>
 					</p>
 				</div>
 

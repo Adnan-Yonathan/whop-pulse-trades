@@ -148,7 +148,7 @@ export function AdminDashboard({ companyId }: AdminDashboardProps) {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="text-[var(--robinhood-muted)]">Loading admin dashboard...</div>
+        <div className="text-robinhood-muted">Loading admin dashboard...</div>
       </div>
     );
   }
@@ -158,29 +158,29 @@ export function AdminDashboard({ companyId }: AdminDashboardProps) {
       {/* Community Stats */}
       {stats && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Card className="p-4">
-            <div className="text-sm text-[var(--robinhood-muted)]">Daily Submissions</div>
-            <div className="text-2xl font-bold text-[var(--robinhood-text)]">{stats.daily.submissions}</div>
+          <Card className="p-4 bg-robinhood-card border border-robinhood-border">
+            <div className="text-sm text-robinhood-muted">Daily Submissions</div>
+            <div className="text-2xl font-bold text-robinhood-text">{stats.daily.submissions}</div>
           </Card>
           
-          <Card className="p-4">
-            <div className="text-sm text-[var(--robinhood-muted)]">Daily Average</div>
-            <div className={cn("text-2xl font-bold", stats.daily.averageGain > 0 ? 'text-[var(--robinhood-green)]' : 'text-[var(--robinhood-red)]')}>
+          <Card className="p-4 bg-robinhood-card border border-robinhood-border">
+            <div className="text-sm text-robinhood-muted">Daily Average</div>
+            <div className={cn("text-2xl font-bold", stats.daily.averageGain > 0 ? 'text-robinhood-green' : 'text-robinhood-red')}>
               {stats.daily.averageGain > 0 ? '+' : ''}{stats.daily.averageGain}%
             </div>
           </Card>
           
-          <Card className="p-4">
-            <div className="text-sm text-[var(--robinhood-muted)]">Total Members</div>
-            <div className="text-2xl font-bold text-[var(--robinhood-text)]">{stats.totalMembers}</div>
+          <Card className="p-4 bg-robinhood-card border border-robinhood-border">
+            <div className="text-sm text-robinhood-muted">Total Members</div>
+            <div className="text-2xl font-bold text-robinhood-text">{stats.totalMembers}</div>
           </Card>
           
-          <Card className="p-4">
-            <div className="text-sm text-[var(--robinhood-muted)]">Best Performer</div>
-            <div className="text-lg font-bold text-[var(--robinhood-green)]">
+          <Card className="p-4 bg-robinhood-card border border-robinhood-border">
+            <div className="text-sm text-robinhood-muted">Best Performer</div>
+            <div className="text-lg font-bold text-robinhood-green">
               {stats.daily.bestGain > 0 ? '+' : ''}{stats.daily.bestGain}%
             </div>
-            <div className="text-sm text-[var(--robinhood-muted)]">
+            <div className="text-sm text-robinhood-muted">
               {stats.daily.bestUser ? `@${stats.daily.bestUser.username}` : 'N/A'}
             </div>
           </Card>
@@ -188,55 +188,55 @@ export function AdminDashboard({ companyId }: AdminDashboardProps) {
       )}
 
       {/* Admin Actions */}
-      <Card className="p-6">
-        <h3 className="text-lg font-semibold text-[var(--robinhood-text)] mb-4">Admin Actions</h3>
+      <Card className="p-6 bg-robinhood-card border border-robinhood-border">
+        <h3 className="text-lg font-semibold text-robinhood-text mb-4">Admin Actions</h3>
         <div className="flex flex-wrap gap-3">
           <Button onClick={() => setShowResetDialog(true)} variant="solid" className="bg-red-600 hover:bg-red-700 text-white">
             Reset Leaderboard
           </Button>
-          <Button onClick={() => handleExport('daily')} variant="soft">
+          <Button onClick={() => handleExport('daily')} variant="soft" className="text-robinhood-text border border-robinhood-border">
             Export Daily CSV
           </Button>
-          <Button onClick={() => handleExport('weekly')} variant="soft">
+          <Button onClick={() => handleExport('weekly')} variant="soft" className="text-robinhood-text border border-robinhood-border">
             Export Weekly CSV
           </Button>
         </div>
       </Card>
 
       {/* Today's Submissions */}
-      <Card className="p-6">
-        <h3 className="text-lg font-semibold text-[var(--robinhood-text)] mb-4">
+      <Card className="p-6 bg-robinhood-card border border-robinhood-border">
+        <h3 className="text-lg font-semibold text-robinhood-text mb-4">
           Today's Submissions ({submissions.length})
         </h3>
         
         {submissions.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-[var(--robinhood-card)]">
+              <thead className="bg-robinhood-bg">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-[var(--robinhood-muted)] uppercase tracking-wider">Rank</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-[var(--robinhood-muted)] uppercase tracking-wider">User</th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-[var(--robinhood-muted)] uppercase tracking-wider">Gain</th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-[var(--robinhood-muted)] uppercase tracking-wider">Submitted</th>
-                  <th className="px-6 py-3 text-center text-xs font-medium text-[var(--robinhood-muted)] uppercase tracking-wider">Proof</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-robinhood-muted uppercase tracking-wider">Rank</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-robinhood-muted uppercase tracking-wider">User</th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-robinhood-muted uppercase tracking-wider">Gain</th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-robinhood-muted uppercase tracking-wider">Submitted</th>
+                  <th className="px-6 py-3 text-center text-xs font-medium text-robinhood-muted uppercase tracking-wider">Proof</th>
                 </tr>
               </thead>
-              <tbody className="bg-[var(--robinhood-bg)] divide-y divide-[var(--robinhood-border)]">
+              <tbody className="bg-robinhood-bg divide-y divide-robinhood-border">
                 {submissions.map((submission, index) => (
                   <tr key={submission.id}>
-                    <td className="px-6 py-4 whitespace-nowrap font-medium">#{index + 1}</td>
+                    <td className="px-6 py-4 whitespace-nowrap font-medium text-robinhood-text">#{index + 1}</td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div>
-                        <div className="font-medium">{submission.user.name}</div>
-                        <div className="text-sm text-[var(--robinhood-muted)]">@{submission.user.username}</div>
+                        <div className="font-medium text-robinhood-text">{submission.user.name}</div>
+                        <div className="text-sm text-robinhood-muted">@{submission.user.username}</div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right">
-                      <span className={cn("font-bold", submission.percentage_gain > 0 ? 'text-[var(--robinhood-green)]' : submission.percentage_gain < 0 ? 'text-[var(--robinhood-red)]' : 'text-[var(--robinhood-text)]')}>
+                      <span className={cn("font-bold", submission.percentage_gain > 0 ? 'text-robinhood-green' : submission.percentage_gain < 0 ? 'text-robinhood-red' : 'text-robinhood-text')}>
                         {submission.percentage_gain > 0 ? '+' : ''}{submission.percentage_gain.toFixed(2)}%
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-[var(--robinhood-muted)]">
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-robinhood-muted">
                       {new Date(submission.submitted_at).toLocaleTimeString([], { 
                         hour: '2-digit', 
                         minute: '2-digit' 
@@ -248,11 +248,12 @@ export function AdminDashboard({ companyId }: AdminDashboardProps) {
                           size="2"
                           variant="soft"
                           onClick={() => handleImageClick(submission.proof_image_url!)}
+                          className="text-robinhood-text border border-robinhood-border"
                         >
                           View Proof
                         </Button>
                       ) : (
-                        <span className="text-[var(--robinhood-muted)] text-sm">No proof</span>
+                        <span className="text-robinhood-muted text-sm">No proof</span>
                       )}
                     </td>
                   </tr>
@@ -261,7 +262,7 @@ export function AdminDashboard({ companyId }: AdminDashboardProps) {
             </table>
           </div>
         ) : (
-          <div className="text-center py-8 text-[var(--robinhood-muted)]">
+          <div className="text-center py-8 text-robinhood-muted">
             No submissions yet today
           </div>
         )}
@@ -270,13 +271,13 @@ export function AdminDashboard({ companyId }: AdminDashboardProps) {
       {/* Reset Modal */}
       {showResetDialog && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-[var(--robinhood-card)] rounded-lg p-6 max-w-md w-full mx-4 border border-[var(--robinhood-border)]">
-            <h3 className="text-lg font-semibold mb-2 text-[var(--robinhood-text)]">Reset Leaderboard</h3>
-            <p className="text-[var(--robinhood-muted)] mb-4">
+          <div className="bg-robinhood-card rounded-lg p-6 max-w-md w-full mx-4 border border-robinhood-border">
+            <h3 className="text-lg font-semibold mb-2 text-robinhood-text">Reset Leaderboard</h3>
+            <p className="text-robinhood-muted mb-4">
               This will reset the leaderboard and award prestige to yesterday's winner. This action cannot be undone.
             </p>
             <div className="flex justify-end space-x-2">
-              <Button variant="soft" onClick={() => setShowResetDialog(false)}>
+              <Button variant="soft" onClick={() => setShowResetDialog(false)} className="text-robinhood-text border border-robinhood-border">
                 Cancel
               </Button>
               <Button variant="solid" className="bg-red-600 hover:bg-red-700 text-white" onClick={() => handleReset('daily')}>
@@ -290,10 +291,10 @@ export function AdminDashboard({ companyId }: AdminDashboardProps) {
       {/* Image Modal */}
       {showImageDialog && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-[var(--robinhood-card)] rounded-lg p-6 max-w-2xl w-full mx-4 border border-[var(--robinhood-border)]">
+          <div className="bg-robinhood-card rounded-lg p-6 max-w-2xl w-full mx-4 border border-robinhood-border">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold text-[var(--robinhood-text)]">Proof Image</h3>
-              <Button variant="soft" onClick={() => setShowImageDialog(false)}>
+              <h3 className="text-lg font-semibold text-robinhood-text">Proof Image</h3>
+              <Button variant="soft" onClick={() => setShowImageDialog(false)} className="text-robinhood-text border border-robinhood-border">
                 Close
               </Button>
             </div>

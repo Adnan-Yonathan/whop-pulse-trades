@@ -41,8 +41,8 @@ export function StockTicker() {
   }, []);
 
   return (
-    <div className="w-full overflow-hidden bg-[var(--robinhood-bg)] border-b border-[var(--robinhood-border)]">
-      <div className="flex animate-scroll">
+    <div className="w-full overflow-hidden bg-robinhood-bg border-b border-robinhood-border">
+      <div className="flex animate-ticker">
         {/* First set of stocks */}
         {stocks.map((stock, index) => (
           <StockItem key={`first-${index}`} stock={stock} />
@@ -60,12 +60,12 @@ function StockItem({ stock }: { stock: StockData }) {
   const isPositive = stock.changePercent >= 0;
   
   return (
-    <div className="flex items-center gap-4 px-6 py-3 min-w-[200px] border-r border-[var(--robinhood-border)]">
+    <div className="flex items-center gap-4 px-6 py-3 min-w-[200px] border-r border-robinhood-border">
       <div className="flex flex-col">
-        <span className="text-[var(--robinhood-text)] font-medium text-sm">
+        <span className="text-robinhood-text font-medium text-sm">
           {stock.symbol}
         </span>
-        <span className="text-[var(--robinhood-muted)] text-xs">
+        <span className="text-robinhood-muted text-xs">
           ${stock.price.toFixed(2)}
         </span>
       </div>
@@ -73,8 +73,8 @@ function StockItem({ stock }: { stock: StockData }) {
         <span 
           className={`font-semibold text-sm ${
             isPositive 
-              ? 'text-[var(--robinhood-green)]' 
-              : 'text-[var(--robinhood-red)]'
+              ? 'text-robinhood-green' 
+              : 'text-robinhood-red'
           }`}
         >
           {isPositive ? '+' : ''}{stock.changePercent.toFixed(2)}%
@@ -82,8 +82,8 @@ function StockItem({ stock }: { stock: StockData }) {
         <span 
           className={`text-xs ${
             isPositive 
-              ? 'text-[var(--robinhood-green)]' 
-              : 'text-[var(--robinhood-red)]'
+              ? 'text-robinhood-green' 
+              : 'text-robinhood-red'
           }`}
         >
           {isPositive ? '+' : ''}${stock.change.toFixed(2)}
@@ -93,25 +93,3 @@ function StockItem({ stock }: { stock: StockData }) {
   );
 }
 
-// Add CSS animation for scrolling
-const styles = `
-  @keyframes scroll {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
-  }
-  
-  .animate-scroll {
-    animation: scroll 30s linear infinite;
-  }
-`;
-
-// Inject styles
-if (typeof document !== 'undefined') {
-  const styleSheet = document.createElement("style");
-  styleSheet.textContent = styles;
-  document.head.appendChild(styleSheet);
-}

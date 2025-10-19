@@ -80,17 +80,17 @@ export function SubmissionModal({ isOpen, onClose, onSuccess, experienceId }: Su
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-[var(--robinhood-card)] rounded-lg p-6 max-w-md w-full mx-4 border border-[var(--robinhood-border)]">
+      <div className="bg-robinhood-card rounded-lg p-6 max-w-md w-full mx-4 border border-robinhood-border">
         <div className="mb-4">
-          <h3 className="text-lg font-semibold text-[var(--robinhood-text)]">Submit Your P&L</h3>
-          <p className="text-[var(--robinhood-muted)] text-sm mt-1">
+          <h3 className="text-lg font-semibold text-robinhood-text">Submit Your P&L</h3>
+          <p className="text-robinhood-muted text-sm mt-1">
             Submit your percentage gain or loss for today. You can only submit once per day.
           </p>
         </div>
 
         <div className="space-y-4">
           <div>
-            <label htmlFor="percentageGain" className="block text-sm font-medium text-[var(--robinhood-text)] mb-1">
+            <label htmlFor="percentageGain" className="block text-sm font-medium text-robinhood-text mb-1">
               Percentage Gain/Loss (%)
             </label>
             <input
@@ -100,15 +100,15 @@ export function SubmissionModal({ isOpen, onClose, onSuccess, experienceId }: Su
               placeholder="e.g., 2.5 or -1.2"
               value={percentageGain}
               onChange={(e) => setPercentageGain(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 bg-[var(--robinhood-bg)] border border-[var(--robinhood-border)] rounded-md text-[var(--robinhood-text)] focus:outline-none focus:ring-2 focus:ring-[var(--robinhood-green)] focus:border-[var(--robinhood-green)]"
+              className="mt-1 block w-full px-3 py-2 bg-robinhood-bg border border-robinhood-border rounded-md text-robinhood-text focus:outline-none focus:ring-2 focus:ring-robinhood-green focus:border-robinhood-green"
             />
-            <p className="text-xs text-[var(--robinhood-muted)] mt-1">
+            <p className="text-xs text-robinhood-muted mt-1">
               Enter positive for gains, negative for losses
             </p>
           </div>
 
           <div>
-            <label htmlFor="proofImage" className="block text-sm font-medium text-[var(--robinhood-text)] mb-1">
+            <label htmlFor="proofImage" className="block text-sm font-medium text-robinhood-text mb-1">
               Proof Image (Optional)
             </label>
             <input
@@ -116,22 +116,22 @@ export function SubmissionModal({ isOpen, onClose, onSuccess, experienceId }: Su
               type="file"
               accept="image/*"
               onChange={handleFileChange}
-              className="mt-1 block w-full px-3 py-2 bg-[var(--robinhood-bg)] border border-[var(--robinhood-border)] rounded-md text-[var(--robinhood-text)] focus:outline-none focus:ring-2 focus:ring-[var(--robinhood-green)] focus:border-[var(--robinhood-green)]"
+              className="mt-1 block w-full px-3 py-2 bg-robinhood-bg border border-robinhood-border rounded-md text-robinhood-text focus:outline-none focus:ring-2 focus:ring-robinhood-green focus:border-robinhood-green"
             />
-            <p className="text-xs text-[var(--robinhood-muted)] mt-1">
+            <p className="text-xs text-robinhood-muted mt-1">
               Upload a screenshot of your trading results for verification
             </p>
           </div>
 
           {error && (
-            <Card className="bg-[var(--robinhood-red)]/10 border-[var(--robinhood-red)] p-3">
-              <p className="text-[var(--robinhood-red)] text-sm">{error}</p>
+            <Card className="bg-robinhood-red/10 border-robinhood-red p-3">
+              <p className="text-robinhood-red text-sm">{error}</p>
             </Card>
           )}
 
           {proofImage && (
-            <Card className="bg-[var(--robinhood-green)]/10 border-[var(--robinhood-green)] p-3">
-              <p className="text-[var(--robinhood-green)] text-sm">
+            <Card className="bg-robinhood-green/10 border-robinhood-green p-3">
+              <p className="text-robinhood-green text-sm">
                 Selected: {proofImage.name}
               </p>
             </Card>
@@ -139,10 +139,10 @@ export function SubmissionModal({ isOpen, onClose, onSuccess, experienceId }: Su
         </div>
 
         <div className="flex justify-end space-x-2 mt-6">
-          <Button variant="soft" onClick={onClose} disabled={isSubmitting} className="text-[var(--robinhood-text)] border-[var(--robinhood-border)]">
+          <Button variant="soft" onClick={onClose} disabled={isSubmitting} className="text-robinhood-text border-robinhood-border">
             Cancel
           </Button>
-          <Button onClick={handleSubmit} disabled={isSubmitting} className="bg-[var(--robinhood-green)] hover:bg-[var(--robinhood-green)]/80 text-[var(--robinhood-bg)]">
+          <Button onClick={handleSubmit} disabled={isSubmitting} className="bg-robinhood-green hover:bg-robinhood-green/80 text-robinhood-bg">
             {isSubmitting ? 'Submitting...' : 'Submit'}
           </Button>
         </div>

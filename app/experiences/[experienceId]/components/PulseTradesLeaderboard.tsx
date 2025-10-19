@@ -88,7 +88,7 @@ export function PulseTradesLeaderboard({ experienceId, currentUserId, isAdmin }:
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="text-[var(--robinhood-muted)]">Loading leaderboard...</div>
+        <div className="text-robinhood-muted">Loading leaderboard...</div>
       </div>
     );
   }
@@ -98,10 +98,10 @@ export function PulseTradesLeaderboard({ experienceId, currentUserId, isAdmin }:
       {/* Header with submission button */}
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-[var(--robinhood-text)]">
+          <h2 className="text-2xl font-bold text-robinhood-text">
             {activeTab === 'daily' ? 'Daily' : 'Weekly'} Leaderboard
           </h2>
-          <p className="text-[var(--robinhood-muted)]">
+          <p className="text-robinhood-muted">
             {activeTab === 'daily' 
               ? 'Rankings based on today\'s trading performance'
               : 'Rankings based on this week\'s cumulative performance'
@@ -112,7 +112,10 @@ export function PulseTradesLeaderboard({ experienceId, currentUserId, isAdmin }:
         <Button 
           onClick={() => setIsSubmissionModalOpen(true)}
           disabled={hasSubmittedToday && activeTab === 'daily'}
-          className={cn(hasSubmittedToday && 'opacity-50')}
+          className={cn(
+            hasSubmittedToday && 'opacity-50',
+            "bg-robinhood-green hover:bg-robinhood-green/80 text-robinhood-bg"
+          )}
         >
           {hasSubmittedToday && activeTab === 'daily' ? 'Already Submitted Today' : 'Submit P&L'}
         </Button>
@@ -120,13 +123,13 @@ export function PulseTradesLeaderboard({ experienceId, currentUserId, isAdmin }:
 
       {/* Tabs */}
       <div className="mb-6">
-        <div className="inline-flex bg-[var(--robinhood-card)] p-1 rounded-lg border border-[var(--robinhood-border)]">
+        <div className="inline-flex bg-robinhood-card p-1 rounded-lg border border-robinhood-border">
           <button
             onClick={() => setActiveTab('daily')}
             className={`px-4 py-2 rounded-md font-medium text-sm transition-all ${
               activeTab === 'daily'
-                ? 'bg-[var(--robinhood-green)] text-[var(--robinhood-bg)]'
-                : 'text-[var(--robinhood-muted)] hover:text-[var(--robinhood-text)]'
+                ? 'bg-robinhood-green text-robinhood-bg'
+                : 'text-robinhood-muted hover:text-robinhood-text'
             }`}
           >
             Daily
@@ -135,8 +138,8 @@ export function PulseTradesLeaderboard({ experienceId, currentUserId, isAdmin }:
             onClick={() => setActiveTab('weekly')}
             className={`px-4 py-2 rounded-md font-medium text-sm transition-all ${
               activeTab === 'weekly'
-                ? 'bg-[var(--robinhood-green)] text-[var(--robinhood-bg)]'
-                : 'text-[var(--robinhood-muted)] hover:text-[var(--robinhood-text)]'
+                ? 'bg-robinhood-green text-robinhood-bg'
+                : 'text-robinhood-muted hover:text-robinhood-text'
             }`}
           >
             Weekly
@@ -147,22 +150,22 @@ export function PulseTradesLeaderboard({ experienceId, currentUserId, isAdmin }:
       {/* Top 3 Podium */}
       {topThree.length > 0 && (
         <div>
-          <h3 className="text-xl font-semibold text-[var(--robinhood-text)] mb-4">Top Performers</h3>
+          <h3 className="text-xl font-semibold text-robinhood-text mb-4">Top Performers</h3>
           <TopThree topThree={topThree} />
         </div>
       )}
 
       {/* Full Leaderboard */}
       <div>
-        <h3 className="text-xl font-semibold text-[var(--robinhood-text)] mb-4">
+        <h3 className="text-xl font-semibold text-robinhood-text mb-4">
           Full Rankings ({leaderboard.length} participants)
         </h3>
         
         {leaderboard.length > 0 ? (
           <LeaderboardTable leaderboard={leaderboard} currentUserId={currentUserId} />
         ) : (
-          <div className="bg-[var(--robinhood-card)] rounded-lg border border-[var(--robinhood-border)] p-8 text-center">
-            <p className="text-[var(--robinhood-muted)]">
+          <div className="bg-robinhood-card rounded-lg border border-robinhood-border p-8 text-center">
+            <p className="text-robinhood-muted">
               {activeTab === 'daily' 
                 ? 'No submissions yet today. Be the first to submit your P&L!'
                 : 'No submissions yet this week. Start submitting your daily P&L to appear here!'
